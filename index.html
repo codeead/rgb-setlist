@@ -1,5 +1,66 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Setlist</title></head>
-<body style="font-family:system-ui;padding:24px">준비 중</body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0f">
+<title>Setlist</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: #0b0b0f; color: #f2f2f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif;
+    padding: max(32px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+    max-width: 480px; margin: 0 auto;
+  }
+  h1 { font-size: 32px; letter-spacing: -0.02em; }
+  .meta { color: #8a8a96; font-size: 14px; margin: 6px 0 24px; font-variant-numeric: tabular-nums; }
+  ol { list-style: none; }
+  li {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: baseline;
+    padding: 14px 0; border-bottom: 1px solid #1f1f27;
+  }
+  .n { color: #5c5c68; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .t { font-size: 17px; font-weight: 500; word-break: keep-all; }
+  .d { color: #8a8a96; font-size: 14px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<h1>Setlist</h1>
+<p class="meta" id="meta"></p>
+<ol id="list"></ol>
+<script>
+const songs = [
+  ["November song", "3:15"],
+  ["이유", "5:08"],
+  ["무희", "3:54"],
+  ["사랑을 전하고 싶다든가", "4:06"],
+  ["순혈주의자", "4:09"],
+  ["Inferno", "3:32"],
+  ["Cliffs Of Dover", "4:12"],
+  ["퇴사할게여", "3:32"],
+  ["Supernova - rock ver", "3:30"],
+  ["Black mamba - rock ver", "3:34"],
+  ["들려주고 싶었던", "4:52"],
+  ["Sub character", "3:38"],
+  ["monster", "3:35"],
+  ["Stargazing", "4:08"],
+  ["High Tide", "4:08"],
+  ["너와 나", "3:38"],
+  ["내 방안은 푸른 바다", "10:00"],
+  ["Detox", "4:14"],
+  ["스쿨픽션", "6:03"],
+  ["질주", "4:38"],
+];
+let total = 0;
+document.getElementById("list").innerHTML = songs.map(([t, d], i) => {
+  const [m, s] = d.split(":").map(Number);
+  total += m * 60 + s;
+  return `<li><span class="n">${String(i + 1).padStart(2, "0")}</span><span class="t">${t}</span><span class="d">${d}</span></li>`;
+}).join("");
+document.getElementById("meta").textContent =
+  `${songs.length}곡 · 약 ${Math.floor(total / 3600)}시간 ${Math.round(total % 3600 / 60)}분`;
+</script>
+</body>
 </html>
