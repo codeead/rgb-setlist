@@ -31,7 +31,7 @@
   /* 배경에만 글리치 결 + 종이 노이즈. 이미지 뒤에 깔려서 포스터·썸네일에는 안 묻음 */
   body { isolation: isolate; }
   body::before {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .3; mix-blend-mode: soft-light;
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .15; mix-blend-mode: soft-light;
     background: url(assets/glitch.webp) center / cover;
   }
   body::after {
