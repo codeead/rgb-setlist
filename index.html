@@ -239,10 +239,14 @@ function genrePage(g) {
 const JA = /[぀-ヿ一-鿿]/;
 function lyricsHTML(text) {
   return text.trim().split(/\n\s*\n/).map(block => {
-    const lines = block.split("\n").filter(l => l.trim());
-    if (!JA.test(lines[0])) return `<p>${lines.map(esc).join("<br>")}</p>`;
-    return `<p class="ja-block">${lines.map((l, i) =>
-      `<span class="${i === 0 ? "ja" : i === 1 ? "pron" : "tr"}">${esc(l)}</span>`).join("")}</p>`;
+    const lines = block.split("\n").filter(l => l.trim() && !/^\[.*\]$/.test(l.trim())); // [ヴァース 1] 같은 구간 표시는 숨김
+    if (!lines.length) return "";
+    if (!lines.some(l => JA.test(l))) return `<p>${lines.map(esc).join("<br>")}</p>`;
+    let prev = "";
+    return `<p class="ja-block">${lines.map(l => {
+      prev = JA.test(l) ? "ja" : prev === "ja" ? "pron" : "tr";
+      return `<span class="${prev}">${esc(l)}</span>`;
+    }).join("")}</p>`;
   }).join("");
 }
 
