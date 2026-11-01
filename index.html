@@ -66,11 +66,7 @@
   .head .kick { font-family: "Archivo Black", sans-serif; font-size: 15px; letter-spacing: .06em; color: var(--line); }
   .head h1 { font-family: "Archivo Black", sans-serif; font-weight: 400; font-size: clamp(54px, 17vw, 84px); line-height: .95; margin-top: 4px;
     -webkit-text-stroke-width: 3px; filter: contrast(1.25) drop-shadow(-5px 5px 0 var(--line)); letter-spacing: -.02em; }
-  .head h1.ko { font-family: "Pretendard Variable", sans-serif; font-weight: 900; letter-spacing: -.04em; word-break: keep-all; }
-  /* 한글 폰트는 획 윤곽이 겹쳐 있어서 text-stroke가 안쪽 선까지 그림 → 그림자 네 방향으로 테두리 대신 */
-  .head h1.ko { -webkit-text-stroke: 0;
-    filter: contrast(1.25) drop-shadow(2px 0 0 var(--line)) drop-shadow(-2px 0 0 var(--line))
-      drop-shadow(0 2px 0 var(--line)) drop-shadow(0 -2px 0 var(--line)) drop-shadow(-5px 5px 0 var(--line)); }
+  .head h1.gname { font-size: clamp(40px, 12.5vw, 64px); line-height: 1.02; }
   .head .sub { margin-top: 12px; font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--cap); text-transform: uppercase; }
   .back { display: inline-block; padding: 18px 0 0; font-size: 13px; font-weight: 700; color: var(--cap); letter-spacing: .04em; }
 
@@ -218,7 +214,7 @@ function home() {
           <div class="pic">${thumb("genre", g.genre, `<svg viewBox="0 0 120 120">${ICONS[g.meta.icon] || ICONS.vinyl}</svg>`)}</div>
           ${wide ? `<span class="sticker">GR@B<small>LIVE AT L29</small></span>` : ""}
         </div>
-        <p class="cap"><b>${esc(g.genre)}</b>${g.meta.en} · SE SID ${range(g)}</p>
+        <p class="cap"><b>${g.meta.en}</b>${esc(g.genre)} · SE SID ${range(g)}</p>
       </a>`)}
   </div>`;
 }
@@ -230,8 +226,8 @@ function genrePage(g) {
     <a class="back" href="#catalog">← 전체 장르</a>
     <div class="head">
       <p class="kick">KATALOG 2026 · ${pad(g.n)}/${pad(groups.length)}</p>
-      <h1 class="ik ko">${esc(g.genre)}</h1>
-      <p class="sub">${g.meta.en} · NO.${range(g)}</p>
+      <h1 class="ik gname">${g.meta.en}</h1>
+      <p class="sub">${esc(g.genre)} · NO.${range(g)}</p>
     </div>
     <div class="sq">${grid(g.songs, (s, wide, t) => `
       <a class="item${wide ? " wide" : ""}" href="#/s/${s.no}">
@@ -242,8 +238,8 @@ function genrePage(g) {
         <p class="cap"><b>${esc(s.title)}</b>NO.${pad(s.no)} · ${esc(s.artist)}</p>
       </a>`)}</div>
     <nav class="nav">
-      ${prev ? `<a href="#/g/${prev.n}"><span>← 이전 순서</span>${esc(prev.genre)}</a>` : ""}
-      ${next ? `<a class="r" href="#/g/${next.n}"><span>다음 순서 →</span>${esc(next.genre)}</a>` : ""}
+      ${prev ? `<a href="#/g/${prev.n}"><span>← 이전 순서</span>${prev.meta.en}</a>` : ""}
+      ${next ? `<a class="r" href="#/g/${next.n}"><span>다음 순서 →</span>${next.meta.en}</a>` : ""}
     </nav>
   </div>`;
 }
@@ -274,12 +270,12 @@ function songPage(s) {
     });
   return `
   <div class="page">
-    <a class="back" href="#/g/${g.n}">← ${esc(g.genre)}</a>
+    <a class="back" href="#/g/${g.n}">← ${g.meta.en}</a>
     <div class="song-pic">
       <span class="price ik">${tag(s.time)}</span>
       <div class="pic">${thumb("song", s.title, `<span class="ph">${pad(s.no)}</span>`)}</div>
     </div>
-    <p class="cap" style="margin-top:22px;text-align:left">NO.${pad(s.no)} · ${esc(g.genre)} · ${g.meta.en}</p>
+    <p class="cap" style="margin-top:22px;text-align:left">NO.${pad(s.no)} · ${g.meta.en} · ${esc(g.genre)}</p>
     <h1 class="song-title">${esc(s.title)}</h1>
     <p class="song-artist">${esc(s.artist)}</p>
     <div class="block">
