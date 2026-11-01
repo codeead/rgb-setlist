@@ -27,8 +27,12 @@
     font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; overflow-x: hidden;
   }
-  /* 배경에만 종이 노이즈. 이미지 뒤에 깔려서 포스터·썸네일에는 안 묻음 */
+  /* 배경에만 글리치 결(아주 옅게) + 종이 노이즈. 이미지 뒤에 깔려서 포스터·썸네일에는 안 묻음 */
   body { isolation: isolate; }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .07; mix-blend-mode: soft-light;
+    background: url(assets/glitch.webp) center / cover;
+  }
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .22; mix-blend-mode: overlay;
     background: url(assets/noise.jpeg) 0 0 / 370px auto;
@@ -159,7 +163,7 @@ const ICONS = {
   sticks: '<path d="M18 110L96 16M102 110L24 16"/><circle cx="96" cy="16" r="5"/><circle cx="24" cy="16" r="5"/>',
 };
 // 이미지·CSV를 바꾸면 이 숫자를 올려야 폰 캐시가 새로 받음
-const V = "4";
+const V = "5";
 const ROLES = [["보컬", 3], ["기타", 4], ["베이스", 5], ["드럼", 6], ["키보드", 7], ["그 외", 8]];
 const TAGS = ["t0", "t1", "t2", "t3", "t4", "t5"];
 
