@@ -100,7 +100,7 @@
 
   /* 곡 상세 */
   .song-pic { position: relative; margin-top: 16px; }
-  .song-pic .pic { aspect-ratio: 4 / 3; }
+  .song-pic .pic, .sq .pic, .sq .item.wide .pic { aspect-ratio: 1; }
   .song-pic .price { position: absolute; z-index: 2; left: -18px; bottom: -16px; font-size: 56px; }
   .song-title { margin-top: 30px; font-size: clamp(30px, 9vw, 40px); font-weight: 900; letter-spacing: -.03em; line-height: 1.15; word-break: keep-all; }
   .song-artist { margin-top: 6px; font-size: 15px; color: var(--cap); }
@@ -218,14 +218,14 @@ function genrePage(g) {
       <h1 class="ik ko">${esc(g.genre)}</h1>
       <p class="sub">${g.meta.en} · NO.${range(g)}</p>
     </div>
-    ${grid(g.songs, (s, wide, t) => `
+    <div class="sq">${grid(g.songs, (s, wide, t) => `
       <a class="item${wide ? " wide" : ""}" href="#/s/${s.no}">
         <div class="frame">
           <span class="price ik ${t}">${tag(s.time)}</span>
           <div class="pic">${thumb("song", s.title, `<span class="ph">${pad(s.no)}</span>`)}</div>
         </div>
         <p class="cap"><b>${esc(s.title)}</b>NO.${pad(s.no)} · ${esc(s.artist)}</p>
-      </a>`)}
+      </a>`)}</div>
     <nav class="nav">
       ${prev ? `<a href="#/g/${prev.n}"><span>← 이전 순서</span>${esc(prev.genre)}</a>` : ""}
       ${next ? `<a class="r" href="#/g/${next.n}"><span>다음 순서 →</span>${esc(next.genre)}</a>` : ""}
