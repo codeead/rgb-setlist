@@ -108,7 +108,13 @@
   .block h3 { font-size: 11px; font-weight: 800; letter-spacing: .2em; color: var(--line); padding-bottom: 8px; border-bottom: 1.5px solid rgba(123,155,232,.4); }
   .crew { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin-top: 12px; font-size: 15px; }
   .crew dt { color: var(--cap); font-weight: 700; }
-  .lyrics { margin-top: 12px; font-size: 15px; line-height: 1.85; white-space: pre-line; color: var(--ink); }
+  .lyrics { margin-top: 12px; font-size: 15px; line-height: 1.85; color: var(--ink); }
+  .lyrics p + p { margin-top: 18px; }
+  .lyrics .ja-block + .ja-block { margin-top: 12px; }
+  .lyrics .ja-block span { display: block; line-height: 1.5; }
+  .lyrics .ja { font-size: 16px; font-weight: 600; }
+  .lyrics .pron { font-size: 12.5px; color: var(--line); }
+  .lyrics .tr { font-size: 14px; color: var(--cap); }
   .lyrics.empty { color: var(--cap); font-size: 14px; }
 
   footer { text-align: center; padding: 48px 16px calc(44px + env(safe-area-inset-bottom)); color: var(--cap); font-size: 12px; letter-spacing: .04em; }
@@ -227,6 +233,17 @@ function genrePage(g) {
   </div>`;
 }
 
+// 빈 줄로 단락 구분. 일본어 줄 다음 줄은 발음, 그 다음 줄부터는 번역으로 표시
+const JA = /[぀-ヿ一-鿿]/;
+function lyricsHTML(text) {
+  return text.trim().split(/\n\s*\n/).map(block => {
+    const lines = block.split("\n").filter(l => l.trim());
+    if (!JA.test(lines[0])) return `<p>${lines.map(esc).join("<br>")}</p>`;
+    return `<p class="ja-block">${lines.map((l, i) =>
+      `<span class="${i === 0 ? "ja" : i === 1 ? "pron" : "tr"}">${esc(l)}</span>`).join("")}</p>`;
+  }).join("");
+}
+
 function songPage(s) {
   const g = groups.find(g => g.songs.includes(s));
   const prev = songs[s.no - 2], next = songs[s.no];
@@ -234,7 +251,7 @@ function songPage(s) {
     .then(r => r.ok ? r.text() : "")
     .then(t => {
       const el = document.getElementById("lyrics");
-      if (el && t.trim()) { el.textContent = t.trim(); el.classList.remove("empty"); }
+      if (el && t.trim()) { el.innerHTML = lyricsHTML(t); el.classList.remove("empty"); }
     });
   return `
   <div class="page">
