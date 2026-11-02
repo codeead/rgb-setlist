@@ -13,7 +13,8 @@
   :root {
     --navy: #272d6e;      /* 이케아 표지 파랑 + 포스터 기타 코발트 */
     --navy-2: #1d2257;
-    --apple: #8dc63f;     /* 포스터 사과 */
+    --apple: #b4ff5a;      /* 포스터 사과를 네온으로 — 하늘색과 밝기가 비슷해 경계가 흐려서 */
+    --pop: #5b7ef0;        /* 초록 글자 그림자: --line보다 진하게 */
     --line: #7b9be8;      /* 이케아 글자 테두리 하늘색 */
     --ink: #eceef6;
     --cap: #c9cadb;       /* 로고 라벤더 */
@@ -41,10 +42,10 @@
 
   /* 이케아식 글자: 사과색 채움 + 하늘색 테두리 그림자 */
   /* 글자 속에 노이즈를 곱해서 인쇄된 듯한 질감. 그림자는 text-shadow 대신 drop-shadow (배경 클립과 같이 쓰려고) */
-  .ik { color: transparent; -webkit-text-stroke: 1.5px var(--line);
+  .ik { color: transparent; -webkit-text-stroke: 1.5px var(--navy-2);
     background: url(assets/noise-ink.webp) 0 0 / 160px auto, var(--apple); background-blend-mode: multiply;
     -webkit-background-clip: text; background-clip: text;
-    filter: contrast(1.25) drop-shadow(-2px 2px 0 var(--line)); }
+    filter: contrast(1.25) drop-shadow(-2px 2px 0 var(--pop)); }
   .price { font-family: Anton, "Pretendard Variable", sans-serif; font-weight: 400; line-height: 1; letter-spacing: .01em; white-space: nowrap; }
   .price small { font-size: .7em; }
 
@@ -65,7 +66,7 @@
   .head { text-align: center; padding: 64px 0 22px; }
   .head .kick { font-family: "Archivo Black", sans-serif; font-size: 15px; letter-spacing: .06em; color: var(--line); }
   .head h1 { font-family: "Archivo Black", sans-serif; font-weight: 400; font-size: clamp(54px, 17vw, 84px); line-height: .95; margin-top: 4px;
-    -webkit-text-stroke-width: 3px; filter: contrast(1.25) drop-shadow(-5px 5px 0 var(--line)); letter-spacing: -.02em; }
+    -webkit-text-stroke-width: 3px; filter: contrast(1.25) drop-shadow(-5px 5px 0 var(--pop)); letter-spacing: -.02em; }
   .head h1.gname { font-size: clamp(40px, 12.5vw, 64px); line-height: 1.02; }
   .head .sub { margin-top: 12px; font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--cap); text-transform: uppercase; }
   .back { display: inline-block; padding: 18px 0 0; font-size: 13px; font-weight: 700; color: var(--cap); letter-spacing: .04em; }
